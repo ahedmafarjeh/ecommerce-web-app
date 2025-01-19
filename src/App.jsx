@@ -5,6 +5,7 @@ import AuthLayout from './layouts/AuthLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 import Register from './pages/user/register/Register';
 import Login from './pages/user/login/Login';
+import { ToastContainer } from 'react-toastify';
 
 export default function App() {
 
@@ -33,6 +34,7 @@ export default function App() {
   );
   return (
     <>
+      <ToastContainer />
     <RouterProvider router={router} />
     </>
   )
