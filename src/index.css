@@ -2,8 +2,8 @@ body {
   background-color: #22303c;
 }
 
-.navbar-expand-lg .navbar-nav .nav-link {
-  color: white;
+ /* .navbar-expand-lg .navbar-nav .nav-link {
+  color: white; 
   padding: 5px;
   border-radius: 5px;
 }
@@ -11,12 +11,15 @@ body {
 .navbar-expand-lg .navbar-nav .nav-link:hover {
   background-color: white;
   color: red;
-}
+} */
 
 .navbar-expand-lg .navbar-nav {
   gap: 10px;
+} 
+.active-link {
+  font-weight: bold;
+  color: red;
 }
-
 /* form inputs and labels styles */
 .form-floating>.form-control,
 .form-floating>.form-control-plaintext {
