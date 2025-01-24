@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useFetch from '../../../components/useFetch/useFetch'
 import CustomProduct from '../../../components/product/CustomProduct';
-import Loading from '../../../components/loading/Loading';
+import Loading from '../../../components/Loading/Loading';
 export default function CategoryProducts() {
   const { categoryID } = useParams();
   const { data, error, loading } = useFetch(`https://ecommerce-node4.onrender.com/products/category/${categoryID}`);

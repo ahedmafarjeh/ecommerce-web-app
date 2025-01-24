@@ -1,7 +1,7 @@
 import React from 'react';
 import useFetch from '../../../components/useFetch/useFetch';
 import CustomProduct from '../../../components/product/CustomProduct';
-import Loading from '../../../components/loading/Loading';
+import Loading from '../../../components/Loading/Loading';
 export default function Products() {
   const { data, error, loading } = useFetch('https://ecommerce-node4.onrender.com/products?limit=10')
   console.log(data.products);

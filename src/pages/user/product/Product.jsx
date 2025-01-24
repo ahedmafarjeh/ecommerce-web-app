@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import useFetch from '../../../components/useFetch/useFetch';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import Loading from '../../../components/loading/Loading';
+import Loading from '../../../components/Loading/Loading';
 export default function Product() {
   const { productID } = useParams();
   const [imgSrc, setImgSrc] = useState('');
