@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Slide, toast } from 'react-toastify';
+import Loading from '../../../components/loading/Loading';
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -50,7 +51,7 @@ export default function Login() {
           </FloatingLabel>
           {errors.password ? <div className='text-danger'>{errors.password.message}</div> : ""}
           <Button type='submit' variant="primary" disabled={isLoading}>
-            {isLoading ? <span className="loader"></span> : "Login"}
+            {isLoading ? <Loading /> : "Login"}
           </Button>
         </div>
       </form>

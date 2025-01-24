@@ -5,8 +5,7 @@ import { Outlet } from 'react-router-dom'
 export default function AuthLayout() {
   return (
     <>
-      <CustomNavbar />
-      {/* outlet: بتحط childre الي نادى على هذه layout مثلا register or login */}
+      {/* outlet: بتحط childe الي نادى على هذه layout مثلا register or login */}
       <Outlet /> 
     </>
   )

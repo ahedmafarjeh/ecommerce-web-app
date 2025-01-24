@@ -6,13 +6,19 @@ import DashboardLayout from './layouts/DashboardLayout';
 import Register from './pages/user/register/Register';
 import Login from './pages/user/login/Login';
 import { ToastContainer } from 'react-toastify';
+import UserLayout from './layouts/UserLayout';
+import Home from './pages/user/home/Home';
+import Categories from './pages/user/category/Categories';
+import Products from './pages/user/product/Products';
+import CategoryProducts from './pages/user/category/CategoryProducts';
+import Product from './pages/user/product/Product';
 
 export default function App() {
 
   const router = createBrowserRouter(
     [
       {
-        path: '/',
+        path: '/auth',
         element: <AuthLayout />,
         children:[
           {
@@ -29,6 +35,32 @@ export default function App() {
       {
         path: '/dashboard',
         element: <DashboardLayout />
+      },
+      {
+        path:'/',
+        element: <UserLayout />,
+        children:[
+          {
+            path:'/',
+            element: <Home />
+          },
+          {
+            path: '/categories',
+            element: <Categories />
+          },
+          {
+            path: '/products',
+            element: <Products />
+          },
+          {
+            path:'/categories/:categoryID',
+            element: <CategoryProducts />
+          },
+          {
+            path: '/products/:productID',
+            element: <Product />
+          }
+        ]
       }
     ]
   );
