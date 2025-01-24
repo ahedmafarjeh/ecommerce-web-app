@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import useFetch from '../../../components/useFetch/useFetch'
 
 import { Link } from 'react-router-dom';
-import Loading from '../../../components/Loading/Loading';
+import Loading from '../../../components/Loading/Loading.jsx';
 
 export default function Categories() {
   const { data, error, loading } = useFetch('https://ecommerce-node4.onrender.com/categories/active')
