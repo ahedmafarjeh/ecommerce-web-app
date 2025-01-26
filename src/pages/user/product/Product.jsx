@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useFetch from '../../../components/useFetch/useFetch';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Loading from '../../../components/loading/Loading';
+import axios from 'axios';
+import { Slide, toast } from 'react-toastify';
 
 export default function Product() {
+  const navigate = useNavigate();
   const { productID } = useParams();
   const [imgSrc, setImgSrc] = useState('');
   const { data, error, loading } = useFetch(`https://ecommerce-node4.onrender.com/products/${productID}`)
@@ -25,6 +28,37 @@ export default function Product() {
     }
     return stars;
   };
+
+  const addProductToCart = async () => {
+    try{
+      const response = await axios.post('https://ecommerce-node4.onrender.com/cart',
+        {
+          productId: productID,
+        },
+        {
+          headers: {
+            Authorization: `Tariq__${localStorage.getItem('userToken')}`
+          }
+        }
+      );
+      if(response.status === 201){
+        toast.success('Product added successfuly', {
+          position: "bottom-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+        navigate('/cart');
+      }
+    }catch(e){
+      console.log(e);
+    }
+  }
 
   if (loading) {
     return (
@@ -76,7 +110,7 @@ export default function Product() {
               </div>
 
               <div className='d-flex justify-content-center'>
-                <button className='btn btn-primary'>Add to Cart</button>
+                <button onClick={addProductToCart} className='btn btn-primary'>Add to Cart</button>
               </div>
             </div>
           </div>

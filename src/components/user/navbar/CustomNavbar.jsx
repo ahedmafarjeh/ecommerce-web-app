@@ -57,6 +57,16 @@ export default function CustomNavbar() {
               })}
               onMouseEnter={() => handleMouseEnter('Products')}
               onMouseLeave={handleMouseLeave}>Products</Nav.Link>
+
+<Nav.Link as={NavLink} to={'/cart'}
+              style={({ isActive }) => ({
+                fontWeight: isActive ? 'bold' : 'normal',
+                color: isActive ? 'red' : hoveredLink === 'Cart' ? "red" : "white",
+                borderRadius: "5px",
+                backgroundColor: isActive ? "transparent" : hoveredLink === 'Cart' ? 'white' : 'transparent',
+              })}
+              onMouseEnter={() => handleMouseEnter('Cart')}
+              onMouseLeave={handleMouseLeave}>Cart</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

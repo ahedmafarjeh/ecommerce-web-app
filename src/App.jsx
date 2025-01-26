@@ -12,6 +12,7 @@ import Categories from './pages/user/category/Categories';
 import Products from './pages/user/product/Products';
 import CategoryProducts from './pages/user/category/CategoryProducts';
 import Product from './pages/user/product/Product';
+import Cart from './pages/user/cart/Cart';
 
 export default function App() {
 
@@ -59,6 +60,10 @@ export default function App() {
           {
             path: '/products/:productID',
             element: <Product />
+          },
+          {
+            path: '/cart',
+            element: <Cart />
           }
         ]
       }
