@@ -8,6 +8,43 @@ export default function Cart() {
   const [cart, setCart] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
+  const [quantity, setQuantity] = useState();
+  const incQuantity = (productID) =>{
+    try{
+      const response = axios.patch('https://ecommerce-node4.onrender.com/cart/incraseQuantity',
+        {
+          productId:productID
+        },
+        {
+          headers: {
+            Authorization: `Tariq__${localStorage.getItem('userToken')}`,
+          },
+        }
+      );
+      console.log(response);
+    }catch(e){
+      console.error(e);
+    }
+  }
+
+  const decQuantity = (productID) =>{
+    try{
+      const response = axios.patch('https://ecommerce-node4.onrender.com/cart/decraseQuantity',
+        {
+          productId:productID
+        },
+        {
+          headers: {
+            Authorization: `Tariq__${localStorage.getItem('userToken')}`,
+          },
+        }
+      );
+    
+    }catch(e){
+      console.error(e);
+    }
+  }
+
 
   const getCartProducts = async () => {
     try {
@@ -22,6 +59,7 @@ export default function Cart() {
       );
       setCart(data.products);
       setError();
+    
     } catch (e) {
       setError(e.response.data.message);
 
@@ -61,7 +99,11 @@ export default function Cart() {
                 <tr key={product._id}>
                   <td><img src={product.details.mainImage.secure_url} alt={product.details.name} className='w-25' /></td>
                   <td>{product.details.name}</td>
-                  <td>{product.quantity}</td>
+                  <td>
+                    <button onClick={() => decQuantity(product.productId)} className='btn btn-danger'>-</button>
+                    {product.quantity}
+                    <button onClick={() => incQuantity(product.productId)} className='btn btn-danger'>+</button>
+                    </td>
                   <td>{product.details.finalPrice}</td>
                   <td className='text-danger fw-bold'>{product.quantity * product.details.finalPrice}</td>
                 </tr>

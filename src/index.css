@@ -1,5 +1,7 @@
 body {
-  background-color: #22303c;
+  background-color: #15202B;
+  
+  
 }
 
  /* .navbar-expand-lg .navbar-nav .nav-link {
@@ -16,13 +18,16 @@ body {
 .navbar-expand-lg .navbar-nav {
   gap: 10px;
 } 
-.active-link {
-  font-weight: bold;
-  color: red;
-}
+
 /* form inputs and labels styles */
+.form-control:focus,
+.form-control,
 .form-floating>.form-control,
 .form-floating>.form-control-plaintext {
-  background-color: #181818;
-  color: white;
+  background-color: #22303c;
+    color: white;
+}
+.form-control:disabled{
+  color: black;
+  background-color:rgba(220, 212, 202,0.6);
 }

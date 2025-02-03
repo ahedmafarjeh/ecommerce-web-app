@@ -1,0 +1,18 @@
+.sidebar_style{
+  color: white;
+  height: 100vh;
+}
+.sidebar_link {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.pro-sidebar .pro-menu .pro-menu-item.sidebar-link:hover {
+  background-color: #007bff !important; /* Change background color on hover */
+  color: white !important; /* Change text color on hover */
+}
+.pro-sidebar .pro-menu .pro-menu-item.sidebar-link:hover {
+  background-color: red; /* Icon color change on hover */
+}
+.sidebar_link:hover {
+  background-color: #007bff !important; 
+  color: white !important;
+}

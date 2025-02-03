@@ -13,6 +13,12 @@ import Products from './pages/user/product/Products';
 import CategoryProducts from './pages/user/category/CategoryProducts';
 import Product from './pages/user/product/Product';
 import Cart from './pages/user/cart/Cart';
+import ProtectedRoute from './components/user/ProtectedRoute';
+import CartContextProvider from './components/user/context/CartContext';
+import Profile from './pages/user/profile/Profile';
+import Info from './pages/user/profile/Info';
+import Order from './pages/user/profile/Order';
+import UserContextProvider from './components/user/context/UserContext';
 
 export default function App() {
 
@@ -21,28 +27,28 @@ export default function App() {
       {
         path: '/auth',
         element: <AuthLayout />,
-        children:[
+        children: [
           {
-            path:'register',
+            path: 'register',
             element: <Register />
           },
           {
-            path:'login',
+            path: 'login',
             element: <Login />
           }
         ]
-        
+
       },
       {
         path: '/dashboard',
         element: <DashboardLayout />
       },
       {
-        path:'/',
+        path: '/',
         element: <UserLayout />,
-        children:[
+        children: [
           {
-            path:'/',
+            path: '/',
             element: <Home />
           },
           {
@@ -54,7 +60,7 @@ export default function App() {
             element: <Products />
           },
           {
-            path:'/categories/:categoryID',
+            path: '/categories/:categoryID',
             element: <CategoryProducts />
           },
           {
@@ -63,7 +69,23 @@ export default function App() {
           },
           {
             path: '/cart',
-            element: <Cart />
+            element: <ProtectedRoute >
+              <Cart />
+            </ProtectedRoute>
+          },
+          {
+            path: '/profile',
+            element: <Profile />,
+            children: [
+              {
+                path: 'info',
+                element: <Info />
+              },
+              {
+                path: 'order',
+                element: <Order />
+              }
+            ]
           }
         ]
       }
@@ -71,8 +93,13 @@ export default function App() {
   );
   return (
     <>
-      <ToastContainer />
-    <RouterProvider router={router} />
+      <UserContextProvider>
+        <CartContextProvider>
+          <ToastContainer />
+          <RouterProvider router={router} />
+        </CartContextProvider>
+      </UserContextProvider>
+
     </>
   )
 }

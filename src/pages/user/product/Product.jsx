@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import useFetch from '../../../components/useFetch/useFetch';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,9 +6,11 @@ import 'swiper/css';
 import Loading from '../../../components/loading/Loading';
 import axios from 'axios';
 import { Slide, toast } from 'react-toastify';
+import { CartContext } from '../../../components/user/context/CartContext';
 
 export default function Product() {
   const navigate = useNavigate();
+  const {cartCount, setCartCount} = useContext(CartContext); 
   const { productID } = useParams();
   const [imgSrc, setImgSrc] = useState('');
   const { data, error, loading } = useFetch(`https://ecommerce-node4.onrender.com/products/${productID}`)
@@ -30,6 +32,20 @@ export default function Product() {
   };
 
   const addProductToCart = async () => {
+    if(!localStorage.getItem('userToken')){
+      toast.error('Please sign in to add product to cart', {
+        position: "bottom-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Slide,
+      });
+      return;  
+    }
     try{
       const response = await axios.post('https://ecommerce-node4.onrender.com/cart',
         {
@@ -53,6 +69,7 @@ export default function Product() {
           theme: "dark",
           transition: Slide,
         });
+        setCartCount(cartCount + 1);
         navigate('/cart');
       }
     }catch(e){
