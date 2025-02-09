@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import useFetch from '../../../components/useFetch/useFetch';
 import Loading from '../../../components/loading/Loading';
+import style from './homeStyle.module.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Container } from 'react-bootstrap';
+import { UserContext } from '../../../components/user/context/UserContext';
 
 export default function Home() {
+  const {loadingUser} = useContext(UserContext);
   const { data, error, loading } = useFetch('https://ecommerce-node4.onrender.com/categories/active')
   console.log(data.categories);
   if (loading) {
@@ -29,7 +32,7 @@ export default function Home() {
       >
         {data.categories.map((category) =>
           <SwiperSlide>
-            <img src={category.image.secure_url} alt={category.name} className='img-fluid w-50' />
+            <img src={category.image.secure_url} alt={category.name} className={style.custom_width} />
           </SwiperSlide>
 
         )}

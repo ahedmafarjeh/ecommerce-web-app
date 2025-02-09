@@ -10,6 +10,7 @@ import { CartContext } from '../../../components/user/context/CartContext';
 
 export default function Product() {
   const navigate = useNavigate();
+  const [addToCardLoading, setAddToCardLoading] = useState();
   const {cartCount, setCartCount} = useContext(CartContext); 
   const { productID } = useParams();
   const [imgSrc, setImgSrc] = useState('');
@@ -47,6 +48,7 @@ export default function Product() {
       return;  
     }
     try{
+      setAddToCardLoading(true);
       const response = await axios.post('https://ecommerce-node4.onrender.com/cart',
         {
           productId: productID,
@@ -74,6 +76,8 @@ export default function Product() {
       }
     }catch(e){
       console.log(e);
+    }finally{
+      setAddToCardLoading(false);
     }
   }
 
@@ -127,7 +131,9 @@ export default function Product() {
               </div>
 
               <div className='d-flex justify-content-center'>
-                <button onClick={addProductToCart} className='btn btn-primary'>Add to Cart</button>
+                <button onClick={addProductToCart} className='btn btn-primary'>
+                  {addToCardLoading? <Loading /> : "Add to Cart"}
+                </button>
               </div>
             </div>
           </div>

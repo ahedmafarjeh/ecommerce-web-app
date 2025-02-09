@@ -4,11 +4,14 @@ import { Link, NavLink } from 'react-router-dom'
 import style from './navbarStyle.module.css'
 import { CartContext } from '../context/CartContext';
 import { UserContext } from '../context/UserContext';
+import Loading from '../../loading/Loading';
 
 export default function CustomNavbar() {
+  
   const { cartCount } = useContext(CartContext);
-  const {user} = useContext(UserContext);
+  const {user,logout} = useContext(UserContext);
   const [hoveredLink, setHoveredLink] = useState(null);
+  
   // Function to handle mouse enter and leave for each link
   const handleMouseEnter = (link) => {
     setHoveredLink(link);
@@ -16,10 +19,11 @@ export default function CustomNavbar() {
   const handleMouseLeave = () => {
     setHoveredLink(null);
   };
+  
   return (
     <Navbar expand="lg" sticky='top' className={style.darknav}>
       <Container>
-        <Navbar.Brand className='text-light' href="#home">Ahed-Shop</Navbar.Brand>
+        <Navbar.Brand className='text-light' as={Link} to={'/'}>Ahed-Shop</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
@@ -92,13 +96,13 @@ export default function CustomNavbar() {
             </Nav.Link>
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Welcome {user.userName}
+                  Welcome {user? user.userName : ""}
                 
                 </Dropdown.Toggle>
   
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to={'/profile'}>Profile</Dropdown.Item>
-                  <Dropdown.Item as={Link} to={'/logout'}>Logout</Dropdown.Item>
+                  <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               </>

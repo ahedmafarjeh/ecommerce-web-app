@@ -1,0 +1,16 @@
+.custom_width {
+  width: 100%;
+}
+
+@media (min-width: 576px) {  /* Small screens and up */
+  .custom_width {
+    width: 75%;
+  }
+}
+
+@media (min-width: 768px) {  /* Medium screens and up */
+  .custom_width {
+    width: 50%;
+  }
+}
+

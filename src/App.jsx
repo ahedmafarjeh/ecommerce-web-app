@@ -19,6 +19,10 @@ import Profile from './pages/user/profile/Profile';
 import Info from './pages/user/profile/Info';
 import Order from './pages/user/profile/Order';
 import UserContextProvider from './components/user/context/UserContext';
+import Image from './pages/user/profile/Image';
+import ProtectAuthPages from './components/user/ProtectAuthPages';
+import ForgetPassword from './pages/user/login/ForgetPassword';
+import SendCode from './pages/user/login/SendCode';
 
 export default function App() {
 
@@ -26,7 +30,11 @@ export default function App() {
     [
       {
         path: '/auth',
-        element: <AuthLayout />,
+        element:
+          <ProtectAuthPages>
+            <AuthLayout />
+          </ProtectAuthPages>
+        ,
         children: [
           {
             path: 'register',
@@ -35,7 +43,15 @@ export default function App() {
           {
             path: 'login',
             element: <Login />
-          }
+          },
+          {
+            path: 'send_code',
+            element: <SendCode />
+          },
+          {
+            path: 'forget_password',
+            element: <ForgetPassword />
+          },
         ]
 
       },
@@ -45,7 +61,13 @@ export default function App() {
       },
       {
         path: '/',
-        element: <UserLayout />,
+        element:
+          <UserContextProvider>
+            <CartContextProvider>
+              <UserLayout />
+            </CartContextProvider>
+          </UserContextProvider>,
+
         children: [
           {
             path: '/',
@@ -84,6 +106,10 @@ export default function App() {
               {
                 path: 'order',
                 element: <Order />
+              },
+              {
+                path: 'image',
+                element: <Image />
               }
             ]
           }
@@ -93,12 +119,10 @@ export default function App() {
   );
   return (
     <>
-      <UserContextProvider>
-        <CartContextProvider>
-          <ToastContainer />
-          <RouterProvider router={router} />
-        </CartContextProvider>
-      </UserContextProvider>
+
+      <ToastContainer />
+      <RouterProvider router={router} />
+
 
     </>
   )

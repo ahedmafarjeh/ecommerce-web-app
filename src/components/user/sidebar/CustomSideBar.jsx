@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import style from './style.module.css';
+import { UserContext } from '../context/UserContext';
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { RiTakeawayLine } from "react-icons/ri";
+import { CiCamera } from "react-icons/ci";
+import { IoIosLogOut } from "react-icons/io";
+
 export default function CustomSideBar() {
+  const {user,setUser,logout} = useContext(UserContext);
+  
   return (
     <Sidebar className={style.sidebar_style} backgroundColor='#22303c'>
       <Menu
@@ -25,8 +33,11 @@ export default function CustomSideBar() {
 
         }}
       >
-        <MenuItem icon="✏️" className='sidebar_link' component={<Link to="/profile/info" />}> Info</MenuItem>
-        <MenuItem component={<Link to="/profile/order" />}> Order</MenuItem>
+        <MenuItem icon={<IoPersonCircleOutline size={100} />} className='sidebar_link' component={<Link to="/profile/info" />}> Info</MenuItem>
+        <MenuItem icon={<RiTakeawayLine size={100} />} component={<Link to="/profile/order" />}> Order</MenuItem>
+        <MenuItem icon={<CiCamera size={50}/>} component={<Link to="/profile/image" />}> Image</MenuItem>
+        <MenuItem onClick={logout} icon={<IoIosLogOut size={50}/>} > Logout</MenuItem>
+
       </Menu>
     </Sidebar>
   )

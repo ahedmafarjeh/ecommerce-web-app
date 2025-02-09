@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Slide, toast } from 'react-toastify';
 import Loading from '../../../components/loading/Loading';
 
@@ -47,8 +47,9 @@ export default function Register() {
   }
   return (
     <>
+    <div className="container">
       <form onSubmit={handleSubmit(signup)}>
-        <div className="container">
+        
         {serverError? <div className='text-danger'>{serverError}</div> : ""}
           <FloatingLabel
             controlId="floatingInput"
@@ -74,11 +75,13 @@ export default function Register() {
             <Form.Control type="password" {...register("password", { required: "please enter password" })} placeholder="" />
           </FloatingLabel>
           {errors.password ? <div className='text-danger'>{errors.password.message}</div> : ""}
-          <Button type='submit' variant="primary" disabled={isLoading}>
+          <Button type='submit' variant="danger" disabled={isLoading}>
             {isLoading ? <Loading /> : "Register"}
           </Button>
-        </div>
+        
       </form>
+      <p className='text-white mt-3'>You have an account? Please <Link className='text-danger' to={'/auth/login'}>Login</Link> here</p>
+      </div>
     </>
   )
 }
