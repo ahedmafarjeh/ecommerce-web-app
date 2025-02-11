@@ -8,7 +8,7 @@ export default function CustomProduct({data,error}) {
       
         <div className="row g-5">
           {error ? <div className='alert alert-danger'>{error}</div> : 
-           data.length === 0? <div className='alert alert-warning'>There are no products for this category</div> : 
+           data.length === 0? <div className='alert alert-warning'>There are no products </div> : 
            data.map((product) =>
             <div className="col-lg-4">
               <Card className='w-75 h-100'>
@@ -23,6 +23,8 @@ export default function CustomProduct({data,error}) {
             </div>
           )}
         </div>
+
+
       
     </>
   )

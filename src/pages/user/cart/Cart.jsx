@@ -11,12 +11,15 @@ import { CartContext } from '../../../components/user/context/CartContext';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [cart, setCart] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
+  const [clearLoading, setClearLoading] = useState();
   const [orderLoading, setOrderLoading] = useState();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -68,20 +71,48 @@ export default function Cart() {
       }
     });
   }
-  const clearCart = async () => {
+  const handleClearCart = async () =>{
     try {
+      setClearLoading(true);
       const response = await axios.patch('https://ecommerce-node4.onrender.com/cart/clear',
+        {},
         {
           headers: {
             Authorization: `Tariq__${localStorage.getItem('userToken')}`,
           },
         }
       );
-      console.log(response);
+      if (response.status == 200) {
+        setCart([]);
+        setCartCount(0);
+      }
+      setClearLoading(false);
     } catch (e) {
       toast.error(e.message);
     }
   }
+  const clearCart = async () => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleClearCart();
+          Swal.fire({
+            title: "Cleared!",
+            text: "Cart has been cleared.",
+            icon: "success"
+          });
+        }
+      });
+    }
+    
+  
   const incQuantity = (productID) => {
 
     try {
@@ -165,6 +196,7 @@ export default function Cart() {
         });
         setCart([]);
         setCartCount(0);
+        navigate('/profile/order');
       }
 
     } catch (e) {
@@ -265,7 +297,9 @@ export default function Cart() {
 
               </Card.Body>
               <Card.Footer className="text-muted">
-                <Button onClick={clearCart} variant='success' className='me-5' >Clear</Button>
+                <Button onClick={clearCart} variant='success' className='me-5' >
+                  {clearLoading? <Loading /> : 'Clear'}
+                  </Button>
                 <Button onClick={handleShow} variant='success' >Create Order</Button>
               </Card.Footer>
             </Card>

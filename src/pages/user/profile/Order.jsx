@@ -3,32 +3,56 @@ import React, { useEffect, useState } from 'react'
 import { Badge, Button, Card, Col, Container, ListGroup, Row, Table } from 'react-bootstrap';
 import { toast } from 'react-toastify'
 import Loading from '../../../components/loading/Loading';
+import Swal from 'sweetalert2';
 
 export default function Order() {
   const [orders, setOrders] = useState();
   const [loading, setLoading] = useState();
   const [cancelLoading, setCancelLoading] = useState();
   const [error, setError] = useState();
-  const cancelOrder = async (orderID) =>{
-    
+
+
+  const cancelOrder = async (orderID) => {
+
     try {
       setCancelLoading(true);
       const response = await axios.patch(`https://ecommerce-node4.onrender.com/order/cancel/${orderID}`,
+        {},
         {
           headers: {
-            Authorization:`Tariq__${localStorage.getItem('userToken')}`,
+            Authorization: `Tariq__${localStorage.getItem('userToken')}`,
           },
         }
       );
-      console.log(response);
-      setOrders(prevOrder =>{
-        return prevOrder.filter(order=> order._id !== orderID);
+      setOrders(prevOrder => {
+        return prevOrder.filter(order => order._id !== orderID);
+
       });
     } catch (error) {
       toast.error(error.message);
-    }finally{
+    } finally {
       setCancelLoading(false);
     }
+  }
+  const handleCancelOrder = (orderID) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        cancelOrder(orderID);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Item has been deleted.",
+          icon: "success"
+        });
+      }
+    });
   }
   const getOrders = async () => {
     try {
@@ -40,7 +64,7 @@ export default function Order() {
           },
         }
       );
-      setOrders(response.data.orders);
+      setOrders(response.data.orders.filter(order => order.status !== 'cancelled'));
       setError();
     } catch (e) {
       setError(error.message);
@@ -63,46 +87,47 @@ export default function Order() {
     <>
       <Container className='my-4'>
         {error ? <div className='alert alert-danger'>{error}</div> :
-          <Table variant='dark' striped bordered hover>
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Products - Quantity</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Created Date</th>
-                <th>Total Price</th>
-                <th>Status</th>
-                <th>Cancel Order</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map(order =>
-                <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>
-                    <ul>
-                      {order.products.map(product =>
-                        <li key={product._id}>{product.productId.name} - {product.quantity}</li>
-                      )}
-                    </ul>
-                  
-                    </td>
-                  <td>{order.address}</td>
-                  <td>{order.phoneNumber}</td>
-                  <td>{order.createdAt}</td>
-                  <td><Badge bg="success">${order.finalPrice}</Badge></td>
-                  <td>{order.status}</td>
-                  <td><Button onClick={() => cancelOrder(order._id)} variant='danger'>
-                    {cancelLoading? <Loading /> : "Cancel"}
-                    </Button></td>
+          orders?.length == 0 ? <div className='alert alert-danger'>There are no orders</div>
+            : <Table variant='dark' striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Products - Quantity</th>
+                  <th>Address</th>
+                  <th>Phone Number</th>
+                  <th>Created Date</th>
+                  <th>Total Price</th>
+                  <th>Status</th>
+                  <th>Cancel Order</th>
                 </tr>
+              </thead>
+              <tbody>
+                {orders?.map(order =>
+                  <tr key={order._id}>
+                    <td>{order._id}</td>
+                    <td>
+                      <ul>
+                        {order.products.map(product =>
+                          <li key={product._id}>{product.productId.name} - {product.quantity}</li>
+                        )}
+                      </ul>
+
+                    </td>
+                    <td>{order.address}</td>
+                    <td>{order.phoneNumber}</td>
+                    <td>{order.createdAt}</td>
+                    <td><Badge bg="success">${order.finalPrice}</Badge></td>
+                    <td>{order.status}</td>
+                    <td><Button onClick={() => handleCancelOrder(order._id)} variant='danger'>
+                      {cancelLoading ? <Loading /> : "Cancel"}
+                    </Button></td>
+                  </tr>
 
 
-              )}
+                )}
 
-            </tbody>
-          </Table>
+              </tbody>
+            </Table>
         }
 
         {/* <Row className='g-3'>

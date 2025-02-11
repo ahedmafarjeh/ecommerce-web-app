@@ -30,7 +30,7 @@ export default function Home() {
         onSlideChange={() => console.log('slide change')}
         onSwiper={(swiper) => console.log(swiper)}
       >
-        {data.categories.map((category) =>
+        {data?.categories.map((category) =>
           <SwiperSlide>
             <img src={category.image.secure_url} alt={category.name} className={style.custom_width} />
           </SwiperSlide>

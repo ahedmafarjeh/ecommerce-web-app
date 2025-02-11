@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
@@ -8,12 +8,12 @@ import Loading from '../../../components/loading/Loading';
 
 export default function Image() {
   const { register, handleSubmit } = useForm();
-  const { user } = useContext(UserContext);
+  const { user , setUser } = useContext(UserContext);
   const [isLodding, setIsLoading] = useState(false);
-  const { profileImg, setProfileImg } = useState(null);
-
+  const [ profileImg, setProfileImg ] = useState(null);
+  
   const updateImage = async (data) => {
-    console.log(data.image[0]);
+    // console.log(data.image[0]);
     const formdata = new FormData();
     formdata.append('image', data.image[0]);
     try {
@@ -28,14 +28,18 @@ export default function Image() {
         }
 
       );
+     console.log("my response");
       console.log(response);
       if (response.status === 200) {
         toast.success('Image updated successfully');
         setProfileImg(response.data.user.image.secure_url);
-
+        setUser(prevUser =>{
+          return {...prevUser, image:{'public_id':response.data.user.image.public_id,'secure_url': response.data.user.image.secure_url}};
+        });
       }
     } catch (e) {
       toast.error(e);
+      console.log(e);
     } finally {
       setIsLoading(false);
     }
@@ -48,8 +52,6 @@ export default function Image() {
         </Form.Group>
         <Button variant="danger" type="submit" className='mb-3'>{isLodding ? <Loading /> : 'Update'}</Button>
       </Form>
-      <h3 className='text-white'>image: {profileImg}</h3>
-      <img src={profileImg} className='w-50 rounded' alt="" />
     </>
 
   )

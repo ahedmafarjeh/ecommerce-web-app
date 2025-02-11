@@ -30,7 +30,7 @@ export default function Register() {
           theme: "dark",
           transition: Slide,
         });
-        navigate('/login');
+        navigate('/auth/login');
       }
     } catch (error) {
       console.log(error);
