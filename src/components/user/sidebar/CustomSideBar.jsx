@@ -15,7 +15,7 @@ export default function CustomSideBar() {
   const { logout } = useContext(UserContext);
 
   return (
-    <Sidebar className={style.sidebar_style} backgroundColor='#22303c'>
+    <Sidebar   className={style.sidebar_style}  backgroundColor='#22303c'>
       <MainImage />
       <Menu
         menuItemStyles={{
@@ -37,7 +37,7 @@ export default function CustomSideBar() {
         }}
       >
         <MenuItem icon={<IoPersonCircleOutline size={100} />} className='sidebar_link' component={<Link to="/profile/info" />}> Info</MenuItem>
-        <MenuItem icon={<RiTakeawayLine size={100} />} component={<Link to="/profile/order" />}> Order</MenuItem>
+        <MenuItem icon={<RiTakeawayLine size={100} />} component={<Link to="/profile/order" />}> Orders</MenuItem>
         <MenuItem icon={<CiCamera size={50} />} component={<Link to="/profile/image" />}> Image</MenuItem>
         <MenuItem onClick={logout} icon={<IoIosLogOut size={50} />} > Logout</MenuItem>
 

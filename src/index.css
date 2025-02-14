@@ -25,7 +25,8 @@ body {
 .form-floating>.form-control,
 .form-floating>.form-control-plaintext {
   background-color: #22303c;
-    color: white;
+  color: white;
+  width: 100%;
 }
 .form-control:disabled{
   color: black;

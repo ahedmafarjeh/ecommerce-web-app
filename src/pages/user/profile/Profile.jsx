@@ -6,12 +6,12 @@ import { Col, Container, Row } from 'react-bootstrap'
 export default function Profile() {
   return (
     <>
-      <Container fluid className='p-0'>
+      <Container fluid className='p-0 overflow-hidden'>
         <Row  >
-          <Col md={2}>
+          <Col xs={12} lg="auto" >
             <CustomSideBar />
           </Col>
-          <Col md={8}>
+          <Col xl={9} >
             <Outlet />
           </Col>
 

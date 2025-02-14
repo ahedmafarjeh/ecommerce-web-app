@@ -46,7 +46,7 @@ export default function Image() {
   }
   return (
     <>
-      <Form className='mt-4' onSubmit={handleSubmit(updateImage)}>
+      <Form className='mt-4 mx-3' onSubmit={handleSubmit(updateImage)}>
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Control type="file" {...register('image')} />
         </Form.Group>

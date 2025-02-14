@@ -85,10 +85,11 @@ export default function Order() {
   }
   return (
     <>
-      <Container className='my-4'>
+      <Container fluid className='my-4'>
         {error ? <div className='alert alert-danger'>{error}</div> :
           orders?.length == 0 ? <div className='alert alert-danger'>There are no orders</div>
-            : <Table variant='dark' striped bordered hover>
+            : <div className='table-responsive' >
+              <Table variant='dark' striped bordered hover>
               <thead>
                 <tr>
                   <th>Order ID</th>
@@ -128,6 +129,8 @@ export default function Order() {
 
               </tbody>
             </Table>
+            </div>
+             
         }
 
         {/* <Row className='g-3'>

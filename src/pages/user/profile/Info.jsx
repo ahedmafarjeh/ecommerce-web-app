@@ -27,7 +27,7 @@ export default function Info() {
   }, []);
   return (
     <>
-      <Form className='mt-3 ms-3'>
+      <Form className='mt-3 mx-3'>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label className='text-white'>Username</Form.Label>
           <div className='position-relative'>
@@ -40,7 +40,7 @@ export default function Info() {
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label className='text-white'>Email address</Form.Label>
           <div className='position-relative'>
-            <Form.Control type="email" {...register('email')} readOnly={emailDisabled} />
+            <Form.Control  type="email" {...register('email')} readOnly={emailDisabled} />
             <button onClick={enableEmailInput} className=' btn position-absolute top-0 end-0'>✏️</button>
           </div>
         </Form.Group>
