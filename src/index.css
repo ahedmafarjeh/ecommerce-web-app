@@ -1,8 +1,8 @@
 body {
   background-color: #15202B;
-  
-  
+
 }
+
 
  /* .navbar-expand-lg .navbar-nav .nav-link {
   color: white; 
@@ -21,6 +21,7 @@ body {
 
 /* form inputs and labels styles */
 .form-control:focus,
+.form-control::placeholder ,
 .form-control,
 .form-floating>.form-control,
 .form-floating>.form-control-plaintext {

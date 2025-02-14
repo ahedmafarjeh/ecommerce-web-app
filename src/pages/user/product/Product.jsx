@@ -67,6 +67,11 @@ export default function Product() {
           }
         }
       );
+      
+      if (response.data && response.data.message) {
+        console.log(response.data.message);  // Set the message from the API response
+      }
+      
       if (response.status === 201) {
         toast.success('Product added successfuly', {
           position: "bottom-center",
@@ -83,7 +88,8 @@ export default function Product() {
         navigate('/cart');
       }
     } catch (e) {
-      console.log(e);
+      // toast.error(e.message);
+      toast.error(e.response.data.message)
     } finally {
       setAddToCardLoading(false);
     }

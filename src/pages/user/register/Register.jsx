@@ -48,7 +48,7 @@ export default function Register() {
   return (
     <>
     <div className="container">
-      <form onSubmit={handleSubmit(signup)}>
+      <form className='mt-5'  onSubmit={handleSubmit(signup)}>
         
         {serverError? <div className='text-danger'>{serverError}</div> : ""}
           <FloatingLabel

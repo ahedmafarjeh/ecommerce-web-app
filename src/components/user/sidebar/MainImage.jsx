@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap'
 import { UserContext } from '../context/UserContext';
 import userProfileImage from '../../../assets/imgs/userimg.jpg';
 export default function MainImage() {
-  const {user} = useContext(UserContext);
+  const {user,loadingUser} = useContext(UserContext);
   return (
     <Container className='mb-2'>
       <div className='d-flex align-items-center gap-3 '>

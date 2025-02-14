@@ -10,7 +10,7 @@ const UserContextProvider = ({children}) =>{
   const logout = () =>{
       localStorage.removeItem('userToken');
       setUser(null);
-      navigate('/');
+      navigate('/auth/login');
     }
   const getUser = async () =>{
     try{

@@ -49,7 +49,8 @@ export default function Order() {
         Swal.fire({
           title: "Deleted!",
           text: "Item has been deleted.",
-          icon: "success"
+          icon: "success",
+          
         });
       }
     });

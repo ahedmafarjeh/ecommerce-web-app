@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 
 export default function Products() {
   const { data, setData, error, loading } = useFetch('https://ecommerce-node4.onrender.com/products?limit=10')
-  const { register, handleSubmit,reset} = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [sortLoading, setSortLoading] = useState(false);
   const [searchLodaing, setSearchLodaing] = useState();
   const [priceRangeLodaing, setPriceRangeLodaing] = useState();
@@ -41,7 +41,7 @@ export default function Products() {
       // setSearchLodaing(true);
       // const response = await axios.get(`https://ecommerce-node4.onrender.com/products?search=${input.search}`);
       // setData(response.data);
-      
+
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -64,7 +64,7 @@ export default function Products() {
 
   const handleDropDownSelection = async (selection) => {
     setSelected(selection);
-    selectionRef.current = selection ;
+    selectionRef.current = selection;
     try {
       setSortLoading(true);
       const response = await axios.get(`https://ecommerce-node4.onrender.com/products?limit=10&&sort=${selectionRef.current}`);
@@ -88,61 +88,65 @@ export default function Products() {
     <>
       <section className='products'>
 
-        <Navbar className='px-3' bg="dark" data-bs-theme="dark" expand="lg" >
-          <Container fluid>
-            
-            <Navbar.Toggle aria-controls="navbarScroll" />
-            <Navbar.Collapse id="navbarScroll">
-              <Nav
-                className="me-auto my-2 my-lg-0"
-                style={{ maxHeight: '100px' }}
-                navbarScroll
-              >
-                
-                <NavDropdown className='fs-5 border rounded py-2' style={{backgroundColor:'#22303c'}} onSelect={handleDropDownSelection} title={selected ? `sorted by ${selected}` : "sort options"} id="basic-nav-dropdown">
-                  <NavDropdown.Item eventKey="name">Name (Ascending)</NavDropdown.Item>
-                  <NavDropdown.Item eventKey="finalPrice">Price (Ascending)</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item eventKey="-name">Name (Descending)</NavDropdown.Item>
-                  <NavDropdown.Item eventKey="-finalPrice">Price (Descending)</NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
+        <div className='px-3 bg-dark'    >
+          <Container fluid className='py-3 text-white d-flex align-items-center flex-wrap gap-2'>
+
+            <div
+              className="me-auto "
 
 
-              <Form onSubmit={handleSubmit(searchProducts)} className="d-flex">
+            >
+
+              <NavDropdown className='fs-5 border rounded py-3 px-4' style={{ backgroundColor: '#22303c' }} onSelect={handleDropDownSelection} title={selected ? `sorted by ${selected}` : "sort options"} id="basic-nav-dropdown">
+                <NavDropdown.Item eventKey="name">Name (Ascending)</NavDropdown.Item>
+                <NavDropdown.Item eventKey="finalPrice">Price (Ascending)</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item eventKey="-name">Name (Descending)</NavDropdown.Item>
+                <NavDropdown.Item eventKey="-finalPrice">Price (Descending)</NavDropdown.Item>
+              </NavDropdown>
+            </div>
+
+
+            <Form onSubmit={handleSubmit(searchProducts)} className="d-flex flex-wrap gap-2 ">
+              <div  className="d-flex flex-wrap gap-2 ">
                 <Form.Control
                   type="text"
                   placeholder="Min price"
-                  className="me-2"
+                  className="me-2 w-auto"
                   aria-label="Maxprice"
-                  
+
                   {...register('price[lte]')}
                 />
                 <Form.Control
                   type="text"
                   placeholder="Max price"
-                  className="me-2"
+                  className="me-2 w-auto"
                   aria-label="Minprice"
                   {...register('price[gte]')}
                 />
                 <Button type='submit' variant="outline-success">
                   {priceRangeLodaing ? <Loading /> : <SearchIcon />}
                 </Button>
-                <p className='text-white mx-3 mt-3 fs-5'>or</p>
+              </div>
+
+              <p className='text-white mx-3 mt-3 fs-5'>or</p>
+              <div  className="d-flex flex-wrap gap-2 ">
                 <Form.Control
                   type="search"
                   placeholder="Search"
-                  className="me-2"
+                  className="me-2 w-auto"
                   aria-label="Search"
                   {...register('search')}
                 />
                 <Button type='submit' variant="outline-success">
                   {searchLodaing ? <Loading /> : "Search"}
                 </Button>
-              </Form>
-            </Navbar.Collapse>
+              </div>
+
+            </Form>
+
           </Container>
-        </Navbar>
+        </div>
 
 
         <h1 className='text-center text-danger my-3'>All Products</h1>
