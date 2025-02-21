@@ -9,6 +9,7 @@ import 'swiper/css/navigation';
 import { Container } from 'react-bootstrap';
 import { UserContext } from '../../../components/user/context/UserContext';
 import CustomProduct from '../../../components/product/CustomProduct';
+import About from '../../../components/About/About';
 
 export default function Home() {
   const {loadingUser} = useContext(UserContext);
@@ -27,7 +28,9 @@ export default function Home() {
   }
   return (
     <>
-    <Container >
+    <Container className='my-3'>
+      <About />
+      <p className='fs-2 text-center text-danger mb-4'>Categories</p>
       <Swiper
       className='my-5'
       modules={[Navigation]}
@@ -45,6 +48,7 @@ export default function Home() {
         )}
 
       </Swiper>
+      <p className='fs-2 text-center text-danger mb-4'>The Most Rating Products</p>
       <CustomProduct  data={productsData?.products} error={perror}  />
     </Container>
     

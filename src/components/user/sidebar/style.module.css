@@ -1,6 +1,7 @@
 .sidebar_style{
   color: white;
   height: 100vh;
+  position: fixed;
   
 }
 .sidebar_link {

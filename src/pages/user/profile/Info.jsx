@@ -18,8 +18,8 @@ export default function Info() {
     setEmailDisabled(false);
   }
   const getUserInfo = () => {
-    setValue('username', user.userName);
-    setValue('email', user.email);
+    setValue('username', user?.userName);
+    setValue('email', user?.email);
 
   }
   useEffect(() => {

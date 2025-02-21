@@ -7,7 +7,7 @@ export default function Profile() {
   return (
     <>
       <Container fluid className='p-0 overflow-hidden'>
-        <Row  >
+        <Row  className='position-relative'>
           <Col xs={12} lg="auto" >
             <CustomSideBar />
           </Col>

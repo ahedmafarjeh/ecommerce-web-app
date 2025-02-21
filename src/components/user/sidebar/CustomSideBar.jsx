@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -9,15 +9,30 @@ import { RiTakeawayLine } from "react-icons/ri";
 import { CiCamera } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import MainImage from './MainImage';
-
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 export default function CustomSideBar() {
   const { logout } = useContext(UserContext);
+  const [collapse, setCollapse] = useState(false);
+
 
   return (
-    <Sidebar   className={style.sidebar_style}  backgroundColor='#22303c'>
+  
+    <>
+    {/* <div className='w-100 border-end border-light pb-3 ps-2 ' style={{backgroundColor:"#22303c"}}>
+          <FaBars  style={{cursor:'pointer'}} className='text-white ' onClick={() => setCollapse(!collapse)} size={20} />
+
+    </div> */}
+      
+      <Sidebar  transitionDuration={600} collapsed={collapse}  className={`${style.sidebar_style}`}  backgroundColor='#22303c'  >
+      <div className='d-flex justify-content-between mx-3 mb-3'>
+        {collapse?
+      <FaBars  style={{cursor:'pointer'}} onClick={() => setCollapse(false)} size={20} />
+      :< FaTimes style={{cursor:'pointer'}} onClick={() => setCollapse(true)} size={20} className='ms-auto'  />
+        }
+      </div>
       <MainImage />
-      <Menu
+      <Menu 
         menuItemStyles={{
           button: {
             // the active class will be added automatically by react router
@@ -40,8 +55,10 @@ export default function CustomSideBar() {
         <MenuItem icon={<RiTakeawayLine size={100} />} component={<Link to="/profile/order" />}> Orders</MenuItem>
         <MenuItem icon={<CiCamera size={50} />} component={<Link to="/profile/image" />}> Image</MenuItem>
         <MenuItem onClick={logout} icon={<IoIosLogOut size={50} />} > Logout</MenuItem>
-
+      
       </Menu>
     </Sidebar>
+
+    </>
   )
 }

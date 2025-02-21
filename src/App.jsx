@@ -23,6 +23,7 @@ import Image from './pages/user/profile/Image';
 import ProtectAuthPages from './components/user/ProtectAuthPages';
 import ForgetPassword from './pages/user/login/ForgetPassword';
 import SendCode from './pages/user/login/SendCode';
+import About from './components/About/About';
 
 export default function App() {
 
@@ -72,6 +73,10 @@ export default function App() {
           {
             path: '/',
             element: <Home />
+          },
+          {
+            path: '/about',
+            element: <About />
           },
           {
             path: '/categories',

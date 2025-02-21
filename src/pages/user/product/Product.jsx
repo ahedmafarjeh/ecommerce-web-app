@@ -12,7 +12,7 @@ import { Badge, Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 export default function Product() {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors },reset } = useForm();
   const [addToCardLoading, setAddToCardLoading] = useState();
   const [reviewLoading, setReviewLoading] = useState();
   const { cartCount, setCartCount } = useContext(CartContext);
@@ -22,6 +22,7 @@ export default function Product() {
   const [orders, setOrders] = useState();
   const [error1, setError] = useState();
   const [rating, setRating] = useState(0);
+  const [resetRating, setResetRating] = useState(false);
   const { data, error, loading } = useFetch(`https://ecommerce-node4.onrender.com/products/${productID}`)
   const targetImg = (e) => {
     console.log(e.target.currentSrc);
@@ -131,8 +132,10 @@ export default function Product() {
     })
   }
   const ratingChanged = (newRating) => {
-    setRating(newRating);
+    resetRating? setRating(0) : setRating(newRating);
+    
   };
+
   const saveReview = async (data) => {
     // console.log(data.comment);
     // console.log(rating);
@@ -149,11 +152,27 @@ export default function Product() {
           }
         }
       );
-      console.log(responce);
+      if(responce.status === 201){
+        toast.success('Review submitted successfully', {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+      
+
+      }
     } catch (error) {
-      toast.error(error.response.message);
+      toast.error(error.response.data.message);
     } finally {
       setReviewLoading(false);
+      reset();
+      setResetRating(true);
     }
   }
   useEffect(() => {
@@ -203,6 +222,7 @@ export default function Product() {
                 activeColor="#ffd700"   // Active color for selected stars (gold)
                 value={data.avgRating}          // Set initial value (the current rating)
                 edit={false}
+                
               />
               {/* <p className="card-text  ">Rating: {renderStars(Math.round(data.avgRating))} </p> */}
               <p>{data.product.description}</p>

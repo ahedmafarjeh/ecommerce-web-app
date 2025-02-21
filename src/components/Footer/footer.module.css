@@ -1,0 +1,13 @@
+.footer{
+  background-color: #22303c;
+  color: white;
+}
+
+.icon{
+  cursor: pointer;
+  transition: 0.5s;
+}
+.icon:hover{
+  background-color: rgb(219, 64, 64);
+  color: white;
+}

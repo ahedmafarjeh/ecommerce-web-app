@@ -9,6 +9,7 @@ export default function Order() {
   const [orders, setOrders] = useState();
   const [loading, setLoading] = useState();
   const [cancelLoading, setCancelLoading] = useState();
+  const [removeLoading, setRemoveLoading] = useState();
   const [error, setError] = useState();
 
 
@@ -34,7 +35,12 @@ export default function Order() {
       setCancelLoading(false);
     }
   }
-  const handleCancelOrder = (orderID) => {
+  const removeRecord = (orderID) => {
+    setOrders(prevOrder => {
+      return prevOrder.filter(order => order._id !== orderID);
+    });
+  }
+  const handleCancelOrder = (orderID, isCancel) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -45,12 +51,12 @@ export default function Order() {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        cancelOrder(orderID);
+        isCancel ? cancelOrder(orderID) : removeRecord(orderID);
         Swal.fire({
           title: "Deleted!",
-          text: "Item has been deleted.",
+          text: isCancel ? "Item has been canceled." : "Item has been deleted",
           icon: "success",
-          
+
         });
       }
     });
@@ -91,47 +97,52 @@ export default function Order() {
           orders?.length == 0 ? <div className='alert alert-danger'>There are no orders</div>
             : <div className='table-responsive' >
               <Table variant='dark' striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Products - Quantity</th>
-                  <th>Address</th>
-                  <th>Phone Number</th>
-                  <th>Created Date</th>
-                  <th>Total Price</th>
-                  <th>Status</th>
-                  <th>Cancel Order</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders?.map(order =>
-                  <tr key={order._id}>
-                    <td>{order._id}</td>
-                    <td>
-                      <ul>
-                        {order.products.map(product =>
-                          <li key={product._id}>{product.productId.name} - {product.quantity}</li>
-                        )}
-                      </ul>
-
-                    </td>
-                    <td>{order.address}</td>
-                    <td>{order.phoneNumber}</td>
-                    <td>{order.createdAt}</td>
-                    <td><Badge bg="success">${order.finalPrice}</Badge></td>
-                    <td>{order.status}</td>
-                    <td><Button onClick={() => handleCancelOrder(order._id)} variant='danger'>
-                      {cancelLoading ? <Loading /> : "Cancel"}
-                    </Button></td>
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Products - Quantity</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Created Date</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Cancel Order/Remove Record</th>
                   </tr>
+                </thead>
+                <tbody>
+                  {orders?.map(order =>
+                    <tr key={order._id}>
+                      <td>{order._id}</td>
+                      <td>
+                        <ul>
+                          {order.products.map(product =>
+                            <li key={product._id}>{product.productId.name} - {product.quantity}</li>
+                          )}
+                        </ul>
+
+                      </td>
+                      <td>{order.address}</td>
+                      <td>{order.phoneNumber}</td>
+                      <td>{order.createdAt}</td>
+                      <td><Badge bg="success">${order.finalPrice}</Badge></td>
+                      <td>{order.status}</td>
+                      <td><Button onClick={() => handleCancelOrder(order._id, true)} variant='danger' disabled={order.status == 'deliverd' ? true : false}>
+                        {cancelLoading ? <Loading /> : "Cancel"}
+                      </Button>
+                        <Button className='mt-3 p-2' onClick={() => handleCancelOrder(order._id, false)} variant='danger' disabled={order.status == 'deliverd' ? false : true}>
+                          Remove Record
+                        </Button>
+                      </td>
+
+                    </tr>
 
 
-                )}
+                  )}
 
-              </tbody>
-            </Table>
+                </tbody>
+              </Table>
             </div>
-             
+
         }
 
         {/* <Row className='g-3'>
